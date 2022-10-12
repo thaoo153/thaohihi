@@ -1,12 +1,15 @@
 import React from "react";
 import { useState } from "react";
 import { TextField, Typography } from "@mui/material";
-import { Button, Stack } from "react-bootstrap";
+import { Button, FormLabel, Stack } from "react-bootstrap";
 import { Box } from "@mui/system";
 
 const FormLogin = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errorEmailMessage, setErrorEmailMessage] = useState("");
+    const [errorPasswordMessage, setErrorPasswordMessage] = useState("");
+
     const handleChangeEmail = (event) => {
         setEmail(event.target.value);
     }
@@ -16,22 +19,22 @@ const FormLogin = () => {
     const handleClick = () => {
         const reEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         const rePassword = /^([A-Z]){1}([\w_!@#$%^&*()]+){5,31}$/;
-        const error = '';
         // console.log(email.match(re));
         
-        if(!email){
-            alert("Required email");
-            error.email = "khudswxi";
-        }else if(!email.match(reEmail)){
-            alert("Wrong fomat")
-            return
-        }
-        if(!password){
-            alert("Required password")
-        }else if(!password.match(rePassword)){
-            alert("Nhập password tối thiểu 6 kí tự không dấu và viết hoa chữ cái đầu")
-        }else{
-            alert("Successfully")
+        // if(!email){
+        //     setErrorEmailMessage('Required email');}
+        // }else if(!email.match(reEmail)){
+        //     setErrorEmailMessage('Wrong fomat');
+        // }else if(email.match(reEmail)){
+        //     setErrorEmailMessage("");
+        // }else{
+        //     alert("Successfully")
+
+        const checkEmail = (!email.match(reEmail)) ? setErrorEmailMessage('Wrong fomat') : setErrorEmailMessage("")
+        const checkPassword = (!password.match(rePassword)) ? setErrorPasswordMessage('Wrong fomat') : setErrorPasswordMessage("")
+
+        if(email.match(reEmail) && password.match(rePassword)){
+            alert("Successfully");
         }
     }
     
@@ -63,11 +66,15 @@ const FormLogin = () => {
                         fullWidth
                         value={email} 
                         onChange={(event) => {handleChangeEmail(event)}}/>
+                        <FormLabel style={{color: 'red', textAlign: 'left'}}>{errorEmailMessage}</FormLabel>
+
                     <TextField  sx={{display: 'block'}}
                         fullWidth
                         label={"Password"}
                         value={password}
                         onChange={(event) => {handleChangePassword(event)}}/>
+                        <FormLabel style={{color: 'red', textAlign: 'left'}}>{errorPasswordMessage}</FormLabel>
+
                     <Button onClick={() => handleClick()}>Log in</Button>
                 </Box>
             </Stack>
