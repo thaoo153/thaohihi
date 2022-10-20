@@ -1,0 +1,5 @@
+.realing{
+    background: linear-gradient(to right, #2512cf 0%, #cf12b3 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+}
